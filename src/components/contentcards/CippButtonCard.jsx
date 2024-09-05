@@ -8,11 +8,10 @@ export default function CippButtonCard({
   titleType = 'normal',
   CardButton,
   children,
-  isFetching = false,
-  className = 'h-100',
+  isFetching,
 }) {
   return (
-    <CCard className={`${className} mb-3`}>
+    <CCard className="h-100 mb-3">
       <CCardHeader>
         <CCardTitle>
           {titleType === 'big' ? <h3 className="underline mb-3">{title}</h3> : title}
@@ -22,7 +21,7 @@ export default function CippButtonCard({
         {isFetching && <Skeleton />}
         {children}
       </CCardBody>
-      {CardButton && <CCardFooter>{CardButton}</CCardFooter>}
+      <CCardFooter>{CardButton}</CCardFooter>
     </CCard>
   )
 }
@@ -30,8 +29,7 @@ export default function CippButtonCard({
 CippButtonCard.propTypes = {
   title: PropTypes.string.isRequired,
   titleType: PropTypes.string,
-  CardButton: PropTypes.element,
+  CardButton: PropTypes.element.isRequired,
   children: PropTypes.element.isRequired,
-  isFetching: PropTypes.bool,
-  className: PropTypes.string,
+  isFetching: PropTypes.bool.isRequired,
 }

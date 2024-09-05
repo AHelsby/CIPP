@@ -18,11 +18,10 @@ export const usersApi = baseApi.injectEndpoints({
       }),
     }),
     listContacts: builder.query({
-      query: ({ tenantDomain, ContactID }) => ({
+      query: ({ tenantDomain }) => ({
         path: '/api/ListContacts',
         params: {
           TenantFilter: tenantDomain,
-          ContactID,
         },
       }),
     }),
@@ -64,7 +63,6 @@ export const usersApi = baseApi.injectEndpoints({
             userId: _args.userId,
             tenantFilter: _args.tenantFilter,
             userName: _args.userName,
-            overwrite: _args.overwrite,
           },
         })
         if (startRequest.error) {

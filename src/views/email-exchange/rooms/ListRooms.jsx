@@ -4,7 +4,6 @@ import { CButton } from '@coreui/react'
 import { faEye, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import { TitleButton } from 'src/components/buttons'
 import { CippPageList } from 'src/components/layout'
 import { CellTip } from 'src/components/tables'
 
@@ -13,7 +12,7 @@ const Rooms = () => {
   /* const Actions = (row, rowIndex, formatExtraData) => (
     <>
       <Link
-        to={`/resources/management/list-rooms?tenantDomain=${tenant.defaultDomainName}`}
+        to={`/rooms/management/list-rooms?tenantDomain=${tenant.defaultDomainName}`}
       >
         <CButton size="sm" variant="ghost" color="success">
           <FontAwesomeIcon icon={faEye} />
@@ -21,7 +20,7 @@ const Rooms = () => {
       </Link>
     </>
   )*/
-  const titleButton = <TitleButton href="/resources/management/add-room" title="Add Room" />
+
   const columns = [
     {
       name: 'Name',
@@ -79,7 +78,6 @@ const Rooms = () => {
   return (
     <CippPageList
       title="Rooms"
-      titleButton={titleButton}
       datatable={{
         columns,
         path: '/api/ListRooms',

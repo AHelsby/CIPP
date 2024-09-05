@@ -63,7 +63,7 @@ const FilterComponent = ({ filterText, onFilter, onClear, filterlist, onFilterPr
           {filterlist &&
             filterlist.map((item, idx) => {
               return (
-                <CDropdownItem key={`filter-${idx}`} onClick={() => onFilterPreset(item.filter)}>
+                <CDropdownItem key={idx} onClick={() => onFilterPreset(item.filter)}>
                   {item.filterName}
                 </CDropdownItem>
               )
@@ -629,14 +629,12 @@ export default function CippTable({
     if (!disablePDFExport || !disableCSVExport) {
       const keys = []
       const exportFormatter = {}
-      const exportFormatterArgs = {}
       columns.map((col) => {
         if (col.exportSelector) keys.push(col.exportSelector)
         if (col.exportFormatter) exportFormatter[col.exportSelector] = col.exportFormatter
-        if (col.exportFormatterArgs)
-          exportFormatterArgs[col.exportSelector] = col.exportFormatterArgs
         return null
       })
+
       // Define the flatten function
       const flatten = (obj, prefix = '') => {
         if (obj === null) return {}
@@ -666,18 +664,18 @@ export default function CippTable({
       // Define the applyFormatter function
       const applyFormatter = (obj) => {
         return Object.keys(obj).reduce((acc, key) => {
-          const formatterArgs = exportFormatterArgs[key]
           const formatter = exportFormatter[key]
+          // Since the keys after flattening will be dot-separated, we need to adjust this to support nested keys if necessary.
           const keyParts = key.split('.')
           const finalKeyPart = keyParts[keyParts.length - 1]
           const formattedValue =
-            typeof formatter === 'function'
-              ? formatter({ row: obj, cell: obj[key], ...formatterArgs })
-              : obj[key]
+            typeof formatter === 'function' ? formatter({ cell: obj[key] }) : obj[key]
           acc[key] = formattedValue
           return acc
         }, {})
       }
+
+      // Process exportData function
       const processExportData = (exportData, selectedColumns) => {
         //filter out the columns that are not selected via selectedColumns
         exportData = exportData.map((item) => {
@@ -722,7 +720,7 @@ export default function CippTable({
                 {dataKeys() &&
                   dataKeys().map((item, idx) => {
                     return (
-                      <CDropdownItem key={`select-${idx}`} onClick={() => addColumn(item)}>
+                      <CDropdownItem key={idx} onClick={() => addColumn(item)}>
                         {updatedColumns.find(
                           (o) => o.exportSelector === item && o?.omit !== true,
                         ) && <FontAwesomeIcon icon={faCheck} />}{' '}
@@ -820,7 +818,7 @@ export default function CippTable({
             <CDropdownMenu>
               {actionsList.map((item, idx) => {
                 return (
-                  <CDropdownItem key={`actions-${idx}`} onClick={() => executeselectedAction(item)}>
+                  <CDropdownItem key={idx} onClick={() => executeselectedAction(item)}>
                     {item.label}
                   </CDropdownItem>
                 )
@@ -885,7 +883,6 @@ export default function CippTable({
     updatedColumns,
     addColumn,
     setGraphFilter,
-    isFetching,
   ])
   const tablePageSize = useSelector((state) => state.app.tablePageSize)
   const [codeCopied, setCodeCopied] = useState(false)
@@ -951,8 +948,8 @@ export default function CippTable({
                     const results = message.data?.Results
                     const displayResults = Array.isArray(results) ? results.join(', ') : results
                     return (
-                      <React.Fragment key={`message-${idx}`}>
-                        <li>
+                      <>
+                        <li key={`message-${idx}`}>
                           {displayResults}
                           <CopyToClipboard text={displayResults} onCopy={() => onCodeCopied()}>
                             <CButton
@@ -969,7 +966,7 @@ export default function CippTable({
                             </CButton>
                           </CopyToClipboard>
                         </li>
-                      </React.Fragment>
+                      </>
                     )
                   })}
                 {loopRunning && (
@@ -1009,12 +1006,11 @@ export default function CippTable({
               progressPending={isFetching}
               progressComponent={<CSpinner color="info" component="div" />}
               paginationRowsPerPageOptions={[25, 50, 100, 200, 500]}
-              keyField={keyField}
               {...rest}
             />
             {selectedRows.length >= 1 && <CCallout>Selected {selectedRows.length} items</CCallout>}
             <CippCodeOffCanvas
-              row={data ?? {}}
+              row={data}
               hideButton={true}
               state={codeOffcanvasVisible}
               hideFunction={() => setCodeOffcanvasVisible(false)}

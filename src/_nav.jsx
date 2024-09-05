@@ -19,7 +19,6 @@ import {
   faUserShield,
   faEnvelope,
   faToolbox,
-  faDownload,
 } from '@fortawesome/free-solid-svg-icons'
 
 const _nav = [
@@ -145,13 +144,8 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Alert Configuration',
-        to: '/tenant/administration/alert-configuration',
-      },
-      {
-        component: CNavItem,
-        name: 'Audit Logs',
-        to: '/tenant/administration/audit-logs',
+        name: 'Alerts',
+        to: '/tenant/administration/alertsqueue',
       },
       {
         component: CNavItem,
@@ -170,11 +164,6 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Authentication Methods',
-        to: '/tenant/administration/authentication-methods',
-      },
-      {
-        component: CNavItem,
         name: 'Tenant Onboarding',
         to: '/tenant/administration/tenant-onboarding',
       },
@@ -187,25 +176,6 @@ const _nav = [
         component: CNavItem,
         name: 'Partner Relationships',
         to: '/tenant/administration/partner-relationships',
-      },
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Configuration Backup',
-    section: 'Tenant Administration',
-    to: '/cipp/gdap',
-    icon: <FontAwesomeIcon icon={faDownload} className="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Backup Wizard',
-        to: '/tenant/backup/backup-wizard',
-      },
-      {
-        component: CNavItem,
-        name: 'Restore Wizard',
-        to: '/tenant/backup/restore-wizard',
       },
     ],
   },
@@ -331,12 +301,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Invite Wizard',
-        to: '/tenant/administration/gdap-invite-wizard',
-      },
-      {
-        component: CNavItem,
-        name: 'Invite List',
-        to: '/tenant/administration/gdap-invites',
+        to: '/tenant/administration/gdap-invite',
       },
       {
         component: CNavItem,
@@ -635,18 +600,13 @@ const _nav = [
     component: CNavGroup,
     name: 'Administration',
     section: 'Email & Exchange',
-    to: '/email/Administration',
+    to: '/email/exchange',
     icon: <FontAwesomeIcon icon={faWrench} className="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Mailboxes',
         to: '/email/administration/mailboxes',
-      },
-      {
-        component: CNavItem,
-        name: 'Deleted Mailboxes',
-        to: '/email/administration/deleted-mailboxes',
       },
       {
         component: CNavItem,
@@ -692,18 +652,13 @@ const _nav = [
         name: 'Mail Test',
         to: '/email/tools/mail-test',
       },
-      {
-        component: CNavItem,
-        name: 'Message Viewer',
-        to: '/email/tools/message-viewer',
-      },
     ],
   },
   {
     component: CNavGroup,
     name: 'Transport',
     section: 'Email & Exchange',
-    to: '/email/Transport',
+    to: '/tenant/administration',
     icon: <FontAwesomeIcon icon={faBus} className="nav-icon" />,
     items: [
       {
@@ -742,7 +697,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Spamfilter',
     section: 'Email & Exchange',
-    to: '/email/spamfilter',
+    to: '/tenant/administration',
     icon: <FontAwesomeIcon icon={faEnvelope} className="nav-icon" />,
     items: [
       {
@@ -764,20 +719,20 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Resource Management',
+    name: ' Room Management',
     section: 'Email & Exchange',
-    to: '/resources/management',
+    to: '/rooms/management',
     icon: <FontAwesomeIcon icon={faToolbox} className="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Rooms',
-        to: '/resources/management/list-rooms',
+        to: '/rooms/management/list-rooms',
       },
       {
         component: CNavItem,
         name: 'Room Lists',
-        to: '/resources/management/room-lists',
+        to: '/rooms/management/room-lists',
       },
     ],
   },
@@ -805,23 +760,8 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Anti-Phishing Filters',
-        to: '/email/reports/antiphishing-filters',
-      },
-      {
-        component: CNavItem,
-        name: 'Malware Filters',
-        to: '/email/reports/malware-filters',
-      },
-      {
-        component: CNavItem,
-        name: 'Safe Links Filters',
-        to: '/email/reports/safelinks-filters',
-      },
-      {
-        component: CNavItem,
-        name: 'Safe Attachments Filters',
-        to: '/email/reports/safeattachments-filters',
+        name: 'Phishing Policies',
+        to: '/email/reports/phishing-policies',
       },
       {
         component: CNavItem,
@@ -850,11 +790,6 @@ const _nav = [
         component: CNavItem,
         name: 'Extensions Settings',
         to: '/cipp/extensions',
-      },
-      {
-        component: CNavItem,
-        name: 'Extension Sync',
-        to: '/cipp/extension-sync',
       },
       {
         component: CNavItem,

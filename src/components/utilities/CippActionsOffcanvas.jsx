@@ -36,13 +36,12 @@ import ReactTimeAgo from 'react-time-ago'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { cellGenericFormatter } from '../tables/CellGenericFormat'
-import ReactSelect from 'react-select'
 
-const CippOffcanvasCard = ({ action }) => {
+const CippOffcanvasCard = ({ action, key }) => {
   const [offcanvasVisible, setOffcanvasVisible] = useState(false)
   return (
     <>
-      <CCard className="border-top-dark border-top-3 mb-3">
+      <CCard key={key} className="border-top-dark border-top-3 mb-3">
         <CCardHeader className="d-flex justify-content-between align-items-center">
           <CCardTitle>Report Name: {action.label}</CCardTitle>
         </CCardHeader>
@@ -95,6 +94,7 @@ const CippOffcanvasCard = ({ action }) => {
 }
 CippOffcanvasCard.propTypes = {
   action: PropTypes.object,
+  key: PropTypes.object,
 }
 
 export default function CippActionsOffcanvas(props) {
@@ -111,14 +111,11 @@ export default function CippActionsOffcanvas(props) {
   const handleModal = useCallback(
     (modalMessage, modalUrl, modalType = 'GET', modalBody, modalInput, modalDropdown) => {
       const handlePostConfirm = () => {
-        console.log(inputRef)
-        const selectedValue = inputRef.current.props?.id
-          ? inputRef.current.props.value.value
-          : inputRef.current.value
+        const selectedValue = inputRef.current.value
         //console.log(inputRef)
         let additionalFields = {}
 
-        if (inputRef.current.props?.id) {
+        if (inputRef.current.nodeName === 'SELECT') {
           const selectedItem = dropDownInfo.data.find(
             (item) => item[modalDropdown.valueField] === selectedValue,
           )
@@ -193,10 +190,7 @@ export default function CippActionsOffcanvas(props) {
               {modalDropdown && (
                 <div>
                   {dropDownInfo.isSuccess && (
-                    <ReactSelect
-                      id="react-select-offcanvas"
-                      classNamePrefix="react-select"
-                      className="react-select-container"
+                    <CFormSelect
                       ref={inputRef}
                       options={dropDownInfo.data.map((data) => ({
                         value: data[modalDropdown.valueField],
